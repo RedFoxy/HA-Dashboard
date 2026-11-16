@@ -1,0 +1,426 @@
+theme: Backend-selected
+icon: mdi:robot-vacuum
+title: Aspirapolvere
+path: aspirapolvere
+layout:
+  max_cols: 1
+  width: 500
+type: custom:masonry-layout
+badges: []
+cards:
+  - type: custom:xiaomi-vacuum-map-card
+    map_source:
+      camera: camera.bartolomeo_map
+    calibration_source:
+      camera: true
+    entity: vacuum.bartolomeo
+    vacuum_platform: default
+    map_modes:
+      - template: vacuum_clean_zone
+      - template: vacuum_goto
+      - template: vacuum_clean_segment
+        predefined_selections:
+          - id: '1'
+            icon:
+              name: mdi:foot-print
+              x: 7000
+              'y': -650
+            label:
+              text: Corridor
+              x: 7000
+              'y': -650
+              offset_y: 35
+            outline:
+              - - 6550
+                - -1250
+              - - 7500
+                - -1250
+              - - 7500
+                - -150
+              - - 6550
+                - -150
+          - id: '2'
+            icon:
+              name: mdi:home-outline
+              x: -1500
+              'y': -850
+            label:
+              text: Mamma
+              x: -1500
+              'y': -850
+              offset_y: 35
+            outline:
+              - - -4000
+                - -4350
+              - - 1050
+                - -4350
+              - - 1050
+                - 700
+              - - -4000
+                - 700
+          - id: '3'
+            icon:
+              name: mdi:toilet
+              x: 8650
+              'y': -100
+            label:
+              text: Bathroom
+              x: 8650
+              'y': -100
+              offset_y: 35
+            outline:
+              - - 7450
+                - -750
+              - - 9650
+                - -750
+              - - 9650
+                - 600
+              - - 7450
+                - 600
+          - id: '4'
+            icon:
+              name: mdi:chef-hat
+              x: 8100
+              'y': -2350
+            label:
+              text: Kitchen
+              x: 8100
+              'y': -2350
+              offset_y: 35
+            outline:
+              - - 6650
+                - -3400
+              - - 9300
+                - -3400
+              - - 9300
+                - -1050
+              - - 6650
+                - -1050
+          - id: '5'
+            icon:
+              name: mdi:home-outline
+              x: 3000
+              'y': -1650
+            label:
+              text: Massimo
+              x: 3000
+              'y': -1650
+              offset_y: 35
+            outline:
+              - - 1050
+                - -4350
+              - - 6550
+                - -4350
+              - - 6550
+                - 650
+              - - 1050
+                - 650
+          - id: '6'
+            icon:
+              name: mdi:foot-print
+              x: 10700
+              'y': -2000
+            label:
+              text: Corridor 2
+              x: 10700
+              'y': -2000
+              offset_y: 35
+            outline:
+              - - 10150
+                - -3400
+              - - 12000
+                - -3400
+              - - 12000
+                - -500
+              - - 10150
+                - -500
+          - id: '7'
+            icon:
+              name: mdi:sofa-outline
+              x: 9400
+              'y': -5450
+            label:
+              text: Living Room
+              x: 9400
+              'y': -5450
+              offset_y: 35
+            outline:
+              - - 6650
+                - -7400
+              - - 11600
+                - -7400
+              - - 11600
+                - -3400
+              - - 6650
+                - -3400
+      - template: vacuum_clean_segment
+        predefined_selections:
+          - id: '1'
+            icon:
+              name: mdi:foot-print
+              x: 7000
+              'y': -650
+            label:
+              text: Corridor
+              x: 7000
+              'y': -650
+              offset_y: 35
+            outline:
+              - - 6550
+                - -1250
+              - - 7500
+                - -1250
+              - - 7500
+                - -150
+              - - 6550
+                - -150
+          - id: '2'
+            icon:
+              name: mdi:home-outline
+              x: -1500
+              'y': -850
+            label:
+              text: Mamma
+              x: -1500
+              'y': -850
+              offset_y: 35
+            outline:
+              - - -4000
+                - -4350
+              - - 1050
+                - -4350
+              - - 1050
+                - 700
+              - - -4000
+                - 700
+          - id: '3'
+            icon:
+              name: mdi:toilet
+              x: 8650
+              'y': -100
+            label:
+              text: Bathroom
+              x: 8650
+              'y': -100
+              offset_y: 35
+            outline:
+              - - 7450
+                - -750
+              - - 9650
+                - -750
+              - - 9650
+                - 600
+              - - 7450
+                - 600
+          - id: '4'
+            icon:
+              name: mdi:chef-hat
+              x: 8100
+              'y': -2350
+            label:
+              text: Kitchen
+              x: 8100
+              'y': -2350
+              offset_y: 35
+            outline:
+              - - 6650
+                - -3400
+              - - 9300
+                - -3400
+              - - 9300
+                - -1050
+              - - 6650
+                - -1050
+          - id: '5'
+            icon:
+              name: mdi:home-outline
+              x: 3000
+              'y': -1650
+            label:
+              text: Massimo
+              x: 3000
+              'y': -1650
+              offset_y: 35
+            outline:
+              - - 1050
+                - -4350
+              - - 6550
+                - -4350
+              - - 6550
+                - 650
+              - - 1050
+                - 650
+          - id: '6'
+            icon:
+              name: mdi:foot-print
+              x: 10700
+              'y': -2000
+            label:
+              text: Corridor 2
+              x: 10700
+              'y': -2000
+              offset_y: 35
+            outline:
+              - - 10150
+                - -3400
+              - - 12000
+                - -3400
+              - - 12000
+                - -500
+              - - 10150
+                - -500
+          - id: '7'
+            icon:
+              name: mdi:sofa-outline
+              x: 9400
+              'y': -5450
+            label:
+              text: Living Room
+              x: 9400
+              'y': -5450
+              offset_y: 35
+            outline:
+              - - 6650
+                - -7400
+              - - 11600
+                - -7400
+              - - 11600
+                - -3400
+              - - 6650
+                - -3400
+      - template: vacuum_clean_segment
+        predefined_selections:
+          - id: '1'
+            icon:
+              name: mdi:foot-print
+              x: 7000
+              'y': -650
+            label:
+              text: Corridor
+              x: 7000
+              'y': -650
+              offset_y: 35
+            outline:
+              - - 6550
+                - -1250
+              - - 7500
+                - -1250
+              - - 7500
+                - -150
+              - - 6550
+                - -150
+          - id: '2'
+            icon:
+              name: mdi:home-outline
+              x: -1500
+              'y': -850
+            label:
+              text: Mamma
+              x: -1500
+              'y': -850
+              offset_y: 35
+            outline:
+              - - -4000
+                - -4350
+              - - 1050
+                - -4350
+              - - 1050
+                - 700
+              - - -4000
+                - 700
+          - id: '3'
+            icon:
+              name: mdi:toilet
+              x: 8650
+              'y': -100
+            label:
+              text: Bathroom
+              x: 8650
+              'y': -100
+              offset_y: 35
+            outline:
+              - - 7450
+                - -750
+              - - 9650
+                - -750
+              - - 9650
+                - 600
+              - - 7450
+                - 600
+          - id: '4'
+            icon:
+              name: mdi:chef-hat
+              x: 8100
+              'y': -2350
+            label:
+              text: Kitchen
+              x: 8100
+              'y': -2350
+              offset_y: 35
+            outline:
+              - - 6650
+                - -3400
+              - - 9300
+                - -3400
+              - - 9300
+                - -1050
+              - - 6650
+                - -1050
+          - id: '5'
+            icon:
+              name: mdi:home-outline
+              x: 3000
+              'y': -1650
+            label:
+              text: Massimo
+              x: 3000
+              'y': -1650
+              offset_y: 35
+            outline:
+              - - 1050
+                - -4350
+              - - 6550
+                - -4350
+              - - 6550
+                - 650
+              - - 1050
+                - 650
+          - id: '6'
+            icon:
+              name: mdi:foot-print
+              x: 10700
+              'y': -2000
+            label:
+              text: Corridor 2
+              x: 10700
+              'y': -2000
+              offset_y: 35
+            outline:
+              - - 10150
+                - -3400
+              - - 12000
+                - -3400
+              - - 12000
+                - -500
+              - - 10150
+                - -500
+          - id: '7'
+            icon:
+              name: mdi:sofa-outline
+              x: 9400
+              'y': -5450
+            label:
+              text: Living Room
+              x: 9400
+              'y': -5450
+              offset_y: 35
+            outline:
+              - - 6650
+                - -7400
+              - - 11600
+                - -7400
+              - - 11600
+                - -3400
+              - - 6650
+                - -3400
+    map_locked: true

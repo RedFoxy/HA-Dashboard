@@ -1,0 +1,681 @@
+type: sections
+max_columns: 3
+title: Stampante 3D
+path: Stampante-3D
+icon: mdi:printer-3d
+sections:
+  - type: grid
+    cards:
+      - type: picture-elements
+        elements:
+          - type: custom:config-template-card
+            entities:
+              - sensor.x1c_00m09d490200685_ams_1_slot_1
+            element:
+              type: state-icon
+              entity: sensor.x1c_00m09d490200685_ams_1_slot_1
+              icon: >-
+                ${states['sensor.x1c_00m09d490200685_ams_1_slot_1'].state.toLowerCase()
+                != 'empty' ? 'fapro:filament-1' : 'mdi:tray' }
+            style:
+              top: 28%
+              left: 21.4%
+              --paper-item-icon-color: var(--tray_1_color)
+              background-color: rgba(0,0,0,0.5)
+              box-shadow: 0 0 5px 5px var(--tray_1_bg)
+              border-radius: 50px
+              --mdc-icon-size: 2.4em
+          - type: state-label
+            entity: sensor.x1c_00m09d490200685_ams_1_slot_1
+            attribute: type
+            tap_action:
+              action: none
+            style:
+              top: 77%
+              left: 21%
+              text-align: center
+              font-size: 1em
+              background-color: rgba(0,0,0,0.4)
+              box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.4)
+              border-radius: 50px
+              pointer-events: none
+              color: '#FFFFFF'
+          - type: custom:config-template-card
+            entities:
+              - sensor.x1c_00m09d490200685_ams_1_slot_2
+            element:
+              type: state-icon
+              entity: sensor.x1c_00m09d490200685_ams_1_slot_2
+              icon: >-
+                ${states['sensor.x1c_00m09d490200685_ams_1_slot_2'].state.toLowerCase()
+                != 'empty' ? 'fapro:filament-1' : 'mdi:tray' }
+            style:
+              top: 28%
+              left: 39.7%
+              --paper-item-icon-color: var(--tray_2_color)
+              background-color: rgba(0,0,0,0.5)
+              box-shadow: 0 0 5px 5px var(--tray_2_bg)
+              border-radius: 50px
+              --mdc-icon-size: 2.4em
+          - type: state-label
+            entity: sensor.x1c_00m09d490200685_ams_1_slot_2
+            attribute: type
+            tap_action:
+              action: none
+            style:
+              top: 77%
+              left: 40%
+              text-align: center
+              font-size: 1em
+              background-color: rgba(0,0,0,0.4)
+              box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.4)
+              border-radius: 50px
+              pointer-events: none
+              color: '#FFFFFF'
+          - type: custom:config-template-card
+            entities:
+              - sensor.x1c_00m09d490200685_ams_1_slot_3
+            element:
+              type: state-icon
+              entity: sensor.x1c_00m09d490200685_ams_1_slot_3
+              icon: >-
+                ${states['sensor.x1c_00m09d490200685_ams_1_slot_3'].state.toLowerCase()
+                != 'empty' ? 'fapro:filament-1' : 'mdi:tray' }
+            style:
+              top: 28%
+              left: 59.7%
+              --paper-item-icon-color: var(--tray_3_color)
+              background-color: rgba(0,0,0,0.5)
+              box-shadow: 0 0 5px 5px var(--tray_3_bg)
+              border-radius: 50px
+              --mdc-icon-size: 2.4em
+          - type: state-label
+            entity: sensor.x1c_00m09d490200685_ams_1_slot_3
+            attribute: type
+            tap_action:
+              action: none
+            style:
+              top: 77%
+              left: 60%
+              text-align: center
+              font-size: 1em
+              background-color: rgba(0,0,0,0.4)
+              box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.4)
+              border-radius: 50px
+              pointer-events: none
+              color: '#FFFFFF'
+          - type: custom:config-template-card
+            entities:
+              - sensor.x1c_00m09d490200685_ams_1_slot_4
+            element:
+              type: state-icon
+              entity: sensor.x1c_00m09d490200685_ams_1_slot_4
+              icon: >-
+                ${states['sensor.x1c_00m09d490200685_ams_1_slot_4'].state.toLowerCase()
+                != 'empty' ? 'fapro:filament-1' : 'mdi:tray' }
+            style:
+              top: 28%
+              left: 79.6%
+              --paper-item-icon-color: var(--tray_4_color)
+              background-color: rgba(0,0,0,0.5)
+              box-shadow: 0 0 5px 5px var(--tray_4_bg)
+              border-radius: 50px
+              --mdc-icon-size: 2.4em
+          - type: state-label
+            entity: sensor.x1c_00m09d490200685_ams_1_slot_4
+            attribute: type
+            tap_action:
+              action: none
+            style:
+              top: 77%
+              left: 79.6%
+              text-align: center
+              font-size: 1em
+              background-color: rgba(0,0,0,0.4)
+              box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.4)
+              border-radius: 50px
+              pointer-events: none
+              color: '#FFFFFF'
+          - type: conditional
+            conditions:
+              - entity: sensor.x1c_00m09d490200685_stato_di_stampa
+                state_not: offline
+            elements:
+              - type: conditional
+                conditions:
+                  - entity: sensor.x1c_00m09d490200685_ams_1_temperatura
+                    state_not:
+                      - unavailable
+                      - unknown
+                elements:
+                  - entity: sensor.x1c_00m09d490200685_ams_1_temperatura
+                    type: state-badge
+                    style:
+                      top: 50.75%
+                      left: 8%
+                      font-size: 0.75em
+                      color: rgba(0,0,0,0)
+              - type: custom:config-template-card
+                entities:
+                  - sensor.x1c_00m09d490200685_ams_1_indice_umidita
+                element:
+                  type: state-icon
+                  entity: sensor.x1c_00m09d490200685_ams_1_indice_umidita
+                  icon: >-
+                    ${'fapro:humidity-level-dark-' +
+                    states['sensor.x1c_00m09d490200685_ams_1_indice_umidita'].state
+                    + '#fullcolor'}
+                style:
+                  top: 38.5%
+                  left: 92.5%
+                  background-color: '#1c1c1c'
+                  border-radius: 50px
+                  border: 0.12em solid var(--humidity-border-color)
+                  --mdc-icon-size: 2.05em
+        image: /local/media/bambuprinter/AMS_2.png
+        card_mod:
+          style: |
+            ha-card {
+              background: none !important;
+              border: none !important;
+              box-shadow: none !important;
+              --humidity-border-color: {% if states('sensor.x1c_00m09d490200685_ams_1_indice_umidita')  != 'unavailable' and states('sensor.x1c_00m09d490200685_ams_1_indice_umidita') | int > 3 %} rgba(255, 255, 126, 0.5); {% elif states('sensor.x1c_00m09d490200685_ams_1_indice_umidita')  != 'unavailable' and states('sensor.x1c_00m09d490200685_ams_1_indice_umidita') | int > 1 %} rgba(228,127,97,1.0); {% else %} rgba(194,74,72,1.0); {% endif %}
+              --tray_1_color: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_1_slot_1', 'color', '#00000000') %} rgb(255, 255, 255); {% else %} {{state_attr('sensor.x1c_00m09d490200685_ams_1_slot_1', 'color') }}; {% endif %}
+              --tray_2_color: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_1_slot_2', 'color', '#00000000') %} rgb(255, 255, 255); {% else %} {{state_attr('sensor.x1c_00m09d490200685_ams_1_slot_2', 'color') }}; {% endif %}
+              --tray_3_color: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_1_slot_3', 'color', '#00000000') %} rgb(255, 255, 255); {% else %} {{state_attr('sensor.x1c_00m09d490200685_ams_1_slot_3', 'color') }}; {% endif %}
+              --tray_4_color: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_1_slot_4', 'color', '#00000000') %} rgb(255, 255, 255); {% else %} {{state_attr('sensor.x1c_00m09d490200685_ams_1_slot_4', 'color') }}; {% endif %}
+              --tray_1_bg: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_1_slot_1', 'active', true) %} rgba(255, 255, 126, 0.5); {% else %} rgba(0,0,0,0.5); {% endif %}
+              --tray_2_bg: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_1_slot_2', 'active', true) %} rgba(255, 255, 126, 0.5); {% else %} rgba(0,0,0,0.5); {% endif %}
+              --tray_3_bg: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_1_slot_3', 'active', true) %} rgba(255, 255, 126, 0.5); {% else %} rgba(0,0,0,0.5); {% endif %}
+              --tray_4_bg: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_1_slot_4', 'active', true) %} rgba(255, 255, 126, 0.5); {% else %} rgba(0,0,0,0.5); {% endif %}
+            }
+      - type: picture-elements
+        elements:
+          - type: custom:button-card
+            entity: switch.stampante_3d
+            icon: mdi:printer-3d
+            show_icon: true
+            show_name: false
+            show_state: false
+            layout: icon_name
+            tap_action:
+              action: |
+                [[[
+                  if (entity) return 'toggle';
+                  else return 'none';
+                ]]]
+            confirmation:
+              text: |
+                [[[
+                  if (states['switch.stampante_3d'].state=='off') 
+                  return 'Do you want turn on?';
+                  else return 'Warning! Do you want turn OFF?';
+                ]]]
+            state:
+              - value: 'on'
+                icon: mdi:power
+                color: green
+              - value: 'off'
+                icon: mdi:power
+                color: grey
+            card_mod:
+              style: |
+                ha-card {
+                  background: none;
+                  border: none;
+                  box-shadow: none !important;
+                }
+            style:
+              left: 33%
+              top: 4.3%
+              width: 35%
+          - type: conditional
+            conditions:
+              - entity: sensor.x1c_00m09d490200685_stato_di_stampa
+                state_not: offline
+            elements:
+              - type: custom:config-template-card
+                entities:
+                  - sensor.x1c_00m09d490200685_segnale_wi_fi
+                element:
+                  type: state-icon
+                  entity: sensor.x1c_00m09d490200685_segnale_wi_fi
+                  icon: >-
+                    ${states['sensor.x1c_00m09d490200685_segnale_wi_fi'].state >
+                    -50 ? 'mdi:wifi-strength-4' :
+                      states['sensor.x1c_00m09d490200685_segnale_wi_fi'].state > -60 ?
+                    'mdi:wifi-strength-3' :
+                      states['sensor.x1c_00m09d490200685_segnale_wi_fi'].state > -67 ?
+                    'mdi:wifi-strength-2' :
+                      states['sensor.x1c_00m09d490200685_segnale_wi_fi'].state > -70 ?
+                    'mdi:wifi-strength-1-alert' : 'mdi:wifi-strength-outline'}
+                style:
+                  left: 43%
+                  top: 4%
+                  font-size: 0.8em
+                  color: rgba(0,0,0,0)
+                  --paper-item-icon-color: >-
+                    ${states['sensor.x1c_00m09d490200685_segnale_wi_fi'].state >
+                    -50 ? 'green' :
+                      states['sensor.x1c_00m09d490200685_segnale_wi_fi'].state > -60 ?
+                    'yellow' :
+                      states['sensor.x1c_00m09d490200685_segnale_wi_fi'].state > -67 ?
+                    'orange' :
+                      states['sensor.x1c_00m09d490200685_segnale_wi_fi'].state > -70 ?
+                    'red' : 'red'}
+              - entity: switch.bentobox
+                type: state-icon
+                style:
+                  top: 76%
+                  left: 75%
+                  --mdc-icon-size: 3.5em
+                  transform: scaleX(-1)
+                tap_action:
+                  action: toggle
+              - entity: light.stampante_3d_led
+                type: state-icon
+                style:
+                  top: 23%
+                  left: 34%
+                  --mdc-icon-size: 3em
+                  rotate: -45deg
+                tap_action:
+                  action: toggle
+              - entity: light.x1c_00m09d490200685_luce_camera_di_stampa
+                type: state-icon
+                style:
+                  top: 26%
+                  left: 20%
+                  --mdc-icon-size: 2.6em
+                tap_action:
+                  action: toggle
+              - entity: sensor.x1c_00m09d490200685_stato_di_stampa
+                type: state-label
+                style:
+                  top: 8.6%
+                  left: 32.8%
+                  font-size: 1.2em
+                  color: '#FFFFFF'
+              - type: conditional
+                conditions:
+                  - entity: sensor.x1c_00m09d490200685_stato_di_stampa
+                    state:
+                      - running
+                      - pause
+                elements:
+                  - type: conditional
+                    conditions:
+                      - entity: image.x1c_00m09d490200685_immagine_modello
+                        state_not: unavailable
+                    elements:
+                      - type: custom:hui-element
+                        card_type: picture-entity
+                        show_name: false
+                        show_state: false
+                        entity: image.x1c_00m09d490200685_immagine_modello
+                        style:
+                          top: 50%
+                          left: 50%
+                          transform: translate(-45%, -40%) scale(75%, 75%)
+                          --ha-card-border-width: 0px
+                          --ha-card-background: none
+                  - entity: sensor.x1c_00m09d490200685_progressi_di_stampa
+                    type: state-badge
+                    tap_action:
+                      action: none
+                    style:
+                      top: 17.5%
+                      left: 55%
+                      font-size: 1em
+                      color: rgba(0,0,0,0)
+                      --label-badge-red: '#11739D'
+              - entity: sensor.x1c_00m09d490200685_temperatura_ugello
+                type: state-badge
+                style:
+                  top: 31%
+                  left: 51%
+                  font-size: 0.8em
+                  color: rgba(0,0,0,0)
+              - entity: sensor.x1c_00m09d490200685_temperatura_piatto
+                type: state-badge
+                style:
+                  top: 73%
+                  left: 51%
+                  font-size: 0.8em
+                  color: rgba(0,0,0,0)
+              - type: conditional
+                conditions:
+                  - entity: sensor.x1c_00m09d490200685_temperatura_camera
+                    state_not: unavailable
+                elements:
+                  - entity: sensor.x1c_00m09d490200685_temperatura_camera
+                    type: state-badge
+                    style:
+                      font-size: 0.8em
+                      top: 41%
+                      left: 77%
+                      color: rgba(0,0,0,0)
+        card_mod:
+          style: |
+            ha-card {
+              background: none !important;
+              border: none !important; 
+              box-shadow: none !important;
+            }
+        image: /local/media/bambuprinter/on_lighton_2.png
+        entity: light.x1c_00m09d490200685_luce_camera_di_stampa
+        state_image:
+          unavailable: /local/media/bambuprinter/off.png
+          'on': /local/media/bambuprinter/on_lighton_2.png
+          'off': /local/media/bambuprinter/off.png
+      - type: picture-elements
+        elements:
+          - type: custom:config-template-card
+            entities:
+              - sensor.x1c_00m09d490200685_externalspool_bobina_esterna
+            element:
+              type: state-icon
+              entity: sensor.x1c_00m09d490200685_externalspool_bobina_esterna
+              icon: >-
+                ${states['sensor.x1c_00m09d490200685_externalspool_bobina_esterna'].state.toLowerCase()
+                != 'empty' ? 'fapro:filament-1' : 'mdi:tray' }
+            style:
+              top: 50%
+              left: 50%
+              transform: translate(-50%, -50%) scale(200%)
+              --paper-item-icon-color: var(--tray_vt_color)
+              background-color: rgba(0,0,0,0.5)
+              box-shadow: 0 0 5px 5px var(--tray_vt_bg)
+              border-radius: 50px
+              --mdc-icon-size: 1.8em
+          - type: state-label
+            entity: sensor.x1c_00m09d490200685_externalspool_bobina_esterna
+            attribute: type
+            tap_action:
+              action: none
+            style:
+              top: 50%
+              left: 85%
+              text-align: center
+              font-size: 1em
+              background-color: rgba(0,0,0,0.4)
+              box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.4)
+              border-radius: 50px
+              pointer-events: none
+              color: '#FFFFFF'
+        image: /local/media/bambuprinter/spool.png
+        card_mod:
+          style: |
+            ha-card {
+              margin-left: auto;
+              margin-right: auto;
+              width: 60%;
+              height: 60%;
+              background: none !important;
+              border: none !important;
+              box-shadow: none !important;
+              --tray_vt_color: {{state_attr('sensor.x1c_00m09d490200685_externalspool_bobina_esterna', 'color') }};
+              --tray_vt_bg: {% if is_state_attr('sensor.x1c_00m09d490200685_externalspool_bobina_esterna', 'active', true) %} rgba(255, 255, 126, 0.5); {% else %} rgba(0,0,0,0.5); {% endif %}
+            }
+  - type: grid
+    cards:
+      - type: picture-elements
+        elements:
+          - type: custom:config-template-card
+            entities:
+              - sensor.x1c_00m09d490200685_ams_2_slot_1
+            element:
+              type: state-icon
+              entity: sensor.x1c_00m09d490200685_ams_2_slot_1
+              icon: >-
+                ${states['sensor.x1c_00m09d490200685_ams_2_slot_1'].state.toLowerCase()
+                != 'empty' ? 'fapro:filament-1' : 'mdi:tray' }
+            style:
+              top: 28%
+              left: 21.4%
+              --paper-item-icon-color: var(--tray_1_color)
+              background-color: rgba(0,0,0,0.5)
+              box-shadow: 0 0 5px 5px var(--tray_1_bg)
+              border-radius: 50px
+              --mdc-icon-size: 2.4em
+          - type: state-label
+            entity: sensor.x1c_00m09d490200685_ams_2_slot_1
+            attribute: type
+            tap_action:
+              action: none
+            style:
+              top: 77%
+              left: 21%
+              text-align: center
+              font-size: 1em
+              background-color: rgba(0,0,0,0.4)
+              box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.4)
+              border-radius: 50px
+              pointer-events: none
+              color: '#FFFFFF'
+          - type: custom:config-template-card
+            entities:
+              - sensor.x1c_00m09d490200685_ams_2_slot_2
+            element:
+              type: state-icon
+              entity: sensor.x1c_00m09d490200685_ams_2_slot_2
+              icon: >-
+                ${states['sensor.x1c_00m09d490200685_ams_2_slot_2'].state.toLowerCase()
+                != 'empty' ? 'fapro:filament-1' : 'mdi:tray' }
+            style:
+              top: 28%
+              left: 39.7%
+              --paper-item-icon-color: var(--tray_2_color)
+              background-color: rgba(0,0,0,0.5)
+              box-shadow: 0 0 5px 5px var(--tray_2_bg)
+              border-radius: 50px
+              --mdc-icon-size: 2.4em
+          - type: state-label
+            entity: sensor.x1c_00m09d490200685_ams_2_slot_2
+            attribute: type
+            tap_action:
+              action: none
+            style:
+              top: 77%
+              left: 40%
+              text-align: center
+              font-size: 1em
+              background-color: rgba(0,0,0,0.4)
+              box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.4)
+              border-radius: 50px
+              pointer-events: none
+              color: '#FFFFFF'
+          - type: custom:config-template-card
+            entities:
+              - sensor.x1c_00m09d490200685_ams_2_slot_3
+            element:
+              type: state-icon
+              entity: sensor.x1c_00m09d490200685_ams_2_slot_3
+              icon: >-
+                ${states['sensor.x1c_00m09d490200685_ams_2_slot_3'].state.toLowerCase()
+                != 'empty' ? 'fapro:filament-1' : 'mdi:tray' }
+            style:
+              top: 28%
+              left: 59.7%
+              --paper-item-icon-color: var(--tray_3_color)
+              background-color: rgba(0,0,0,0.5)
+              box-shadow: 0 0 5px 5px var(--tray_3_bg)
+              border-radius: 50px
+              --mdc-icon-size: 2.4em
+          - type: state-label
+            entity: sensor.x1c_00m09d490200685_ams_2_slot_3
+            attribute: type
+            tap_action:
+              action: none
+            style:
+              top: 77%
+              left: 60%
+              text-align: center
+              font-size: 1em
+              background-color: rgba(0,0,0,0.4)
+              box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.4)
+              border-radius: 50px
+              pointer-events: none
+              color: '#FFFFFF'
+          - type: custom:config-template-card
+            entities:
+              - sensor.x1c_00m09d490200685_ams_2_slot_4
+            element:
+              type: state-icon
+              entity: sensor.x1c_00m09d490200685_ams_2_slot_4
+              icon: >-
+                ${states['sensor.x1c_00m09d490200685_ams_2_slot_4'].state.toLowerCase()
+                != 'empty' ? 'fapro:filament-1' : 'mdi:tray' }
+            style:
+              top: 28%
+              left: 79.6%
+              --paper-item-icon-color: var(--tray_4_color)
+              background-color: rgba(0,0,0,0.5)
+              box-shadow: 0 0 5px 5px var(--tray_4_bg)
+              border-radius: 50px
+              --mdc-icon-size: 2.4em
+          - type: state-label
+            entity: sensor.x1c_00m09d490200685_ams_2_slot_4
+            attribute: type
+            tap_action:
+              action: none
+            style:
+              top: 77%
+              left: 79.6%
+              text-align: center
+              font-size: 1em
+              background-color: rgba(0,0,0,0.4)
+              box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.4)
+              border-radius: 50px
+              pointer-events: none
+              color: '#FFFFFF'
+          - type: conditional
+            conditions:
+              - entity: sensor.x1c_00m09d490200685_stato_di_stampa
+                state_not: offline
+            elements:
+              - type: conditional
+                conditions:
+                  - entity: sensor.x1c_00m09d490200685_ams_2_temperatura
+                    state_not:
+                      - unavailable
+                      - unknown
+                elements:
+                  - entity: sensor.x1c_00m09d490200685_ams_2_temperatura
+                    type: state-badge
+                    style:
+                      top: 50.75%
+                      left: 8%
+                      font-size: 0.75em
+                      color: rgba(0,0,0,0)
+              - type: custom:config-template-card
+                entities:
+                  - sensor.x1c_00m09d490200685_ams_2_indice_umidita
+                element:
+                  type: state-icon
+                  entity: sensor.x1c_00m09d490200685_ams_2_indice_umidita
+                  icon: >-
+                    ${'fapro:humidity-level-dark-' +
+                    states['sensor.x1c_00m09d490200685_ams_2_indice_umidita'].state
+                    + '#fullcolor'}
+                style:
+                  top: 38.5%
+                  left: 92.5%
+                  background-color: '#1c1c1c'
+                  border-radius: 50px
+                  border: 0.12em solid var(--humidity-border-color)
+                  --mdc-icon-size: 2.05em
+        image: /local/media/bambuprinter/AMS_2.png
+        card_mod:
+          style: |
+            ha-card {
+              background: none !important;
+              border: none !important;
+              box-shadow: none !important;
+              --humidity-border-color: {% if states('sensor.x1c_00m09d490200685_ams_2_indice_umidita')  != 'unavailable' and states('sensor.x1c_00m09d490200685_ams_2_indice_umidita') | int > 3 %} rgba(255, 255, 126, 0.5); {% elif states('sensor.x1c_00m09d490200685_ams_2_indice_umidita')  != 'unavailable' and states('sensor.x1c_00m09d490200685_ams_2_indice_umidita') | int > 1 %} rgba(228,127,97,1.0); {% else %} rgba(194,74,72,1.0); {% endif %}
+              --tray_1_color: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_2_slot_1', 'color', '#00000000') %} rgb(255, 255, 255); {% else %} {{state_attr('sensor.x1c_00m09d490200685_ams_2_slot_1', 'color') }}; {% endif %}
+              --tray_2_color: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_2_slot_2', 'color', '#00000000') %} rgb(255, 255, 255); {% else %} {{state_attr('sensor.x1c_00m09d490200685_ams_2_slot_2', 'color') }}; {% endif %}
+              --tray_3_color: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_2_slot_3', 'color', '#00000000') %} rgb(255, 255, 255); {% else %} {{state_attr('sensor.x1c_00m09d490200685_ams_2_slot_3', 'color') }}; {% endif %}
+              --tray_4_color: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_2_slot_4', 'color', '#00000000') %} rgb(255, 255, 255); {% else %} {{state_attr('sensor.x1c_00m09d490200685_ams_2_slot_4', 'color') }}; {% endif %}
+              --tray_1_bg: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_2_slot_1', 'active', true) %} rgba(255, 255, 126, 0.5); {% else %} rgba(0,0,0,0.5); {% endif %}
+              --tray_2_bg: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_2_slot_2', 'active', true) %} rgba(255, 255, 126, 0.5); {% else %} rgba(0,0,0,0.5); {% endif %}
+              --tray_3_bg: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_2_slot_3', 'active', true) %} rgba(255, 255, 126, 0.5); {% else %} rgba(0,0,0,0.5); {% endif %}
+              --tray_4_bg: {% if is_state_attr('sensor.x1c_00m09d490200685_ams_2_slot_4', 'active', true) %} rgba(255, 255, 126, 0.5); {% else %} rgba(0,0,0,0.5); {% endif %}
+            }
+      - type: vertical-stack
+        cards:
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: custom:button-card
+                entity: switch.x1c_00m09d490200685_abilita_fotocamera
+                name: Fotocamera
+                card_mod:
+                  style: |
+                    ha-card {
+                      box-shadow: none !important;
+                      background-color: rgba(0,0,0,0);
+                      border: none;
+                      --paper-item-icon-color: {% if is_state('sensor.x1c_00m09d490200685_stato_di_stampa', 'RUNNING') or is_state('sensor.x1c_00m09d490200685_stato_di_stampa', 'PAUSE') or is_state('sensor.x1c_00m09d490200685_stato_di_stampa', 'running') or is_state('sensor.x1c_00m09d490200685_stato_di_stampa', 'pause') %} red; {% else %} grey; {% endif %}
+                    }
+              - type: custom:button-card
+                entity: automation.40_stampante_3d_spegnimento_automatico
+                name: Auto Off
+                card_mod:
+                  style: |
+                    ha-card {
+                      box-shadow: none !important;
+                      background-color: rgba(0,0,0,0);
+                      border: none;
+                      --paper-item-icon-color: {% if is_state('sensor.x1c_00m09d490200685_stato_di_stampa', 'RUNNING') or is_state('sensor.x1c_00m09d490200685_stato_di_stampa', 'PAUSE') or is_state('sensor.x1c_00m09d490200685_stato_di_stampa', 'running') or is_state('sensor.x1c_00m09d490200685_stato_di_stampa', 'pause') %} red; {% else %} grey; {% endif %}
+                    }
+      - type: custom:mushroom-entity-card
+        entity: sensor.x1c_00m09d490200685_nome_attivita
+        name: Attività in corso
+        icon: mdi:clipboard-text
+        grid_options:
+          columns: 12
+          rows: 1
+      - type: custom:mushroom-entity-card
+        entity: sensor.x1c_00m09d490200685_progressi_di_stampa
+        name: Stato della stampa
+        icon: mdi:progress-helper
+      - type: custom:mushroom-template-card
+        primary: Layer attuale
+        icon_color: var(--rgb-state-entity)
+        secondary: >-
+          {{states('sensor.x1c_00m09d490200685_strato_corrente')}} /
+          {{states('sensor.x1c_00m09d490200685_livelli_totali')}}
+        icon: mdi:layers
+      - type: picture
+        image_entity: image.x1c_00m09d490200685_immagine_modello
+  - type: grid
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:tabbed-card
+            options: {}
+            tabs:
+              - card:
+                  type: vertical-stack
+                  cards:
+                    - type: entities
+                      entities:
+                        - entity: sensor.x1c_00m09d490200685_fase_corrente
+                          name: Fase attuale
+                        - entity: binary_sensor.x1c_00m09d490200685_errori_hms
+                          name: Notifiche HMS
+                        - entity: sensor.x1c_00m09d490200685_ora_inizio
+                          name: Ora di avvio
+                          secondary_info: last-changed
+                        - entity: sensor.x1c_00m09d490200685_tempo_di_fine
+                          name: Fine stampa
+                        - entity: sensor.x1c_00m09d490200685_tempo_rimanente
+                          name: Tempo alla fine
+                attributes:
+                  label: Dettagli
+      - type: custom:ha-bambulab-print_status-card
+        printer: MOCK
+        style: simple
+        custom_power: switch.stampante_3d
+cards: []

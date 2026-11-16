@@ -1,0 +1,535 @@
+type: sections
+title: Kitt
+path: kitt
+icon: mdi:car-side
+max_columns: 3
+sections:
+  - type: grid
+    cards:
+      - type: heading
+        heading: Kitt
+        heading_style: title
+        badges:
+          - type: entity
+            entity: binary_sensor.kitt_status
+          - type: entity
+            entity: sensor.kitt_battery_level
+          - type: entity
+            entity: sensor.kitt_battery_range
+      - type: custom:button-card
+        show_name: false
+        show_icon: false
+        show_state: false
+        tap_action:
+          action: none
+        grid_options:
+          columns: full
+        custom_fields:
+          pic: >-
+            [[[ return `<img src="/local/tesla-model-y-silver-top5-crop.png"
+            style="height:440px;display:block">`; ]]]
+          serratura:
+            card:
+              type: custom:mushroom-chips-card
+              chips:
+                - type: template
+                  entity: lock.kitt_serratura
+                  tap_action:
+                    action: more-info
+                  icon: >-
+                    {{ 'mdi:car-door-lock' if is_state(entity, 'locked') else
+                    'mdi:car-door-lock-open' }}
+                  icon_color: '{{ ''green'' if is_state(entity, ''locked'') else ''red'' }}'
+                  content: >-
+                    Auto {{ 'chiusa' if is_state(entity, 'locked') else 'aperta'
+                    }}
+          temp_esterna:
+            card:
+              type: custom:mushroom-chips-card
+              alignment: end
+              chips:
+                - type: template
+                  entity: sensor.kitt_outside_temperature
+                  icon: mdi:thermometer
+                  icon_color: blue
+                  content: Esterno {{ states(entity) | float(0) | round(1) }} °C
+          frunk:
+            card:
+              type: custom:mushroom-chips-card
+              alignment: center
+              chips:
+                - type: template
+                  entity: cover.kitt_frunk
+                  tap_action:
+                    action: more-info
+                  icon: mdi:car-select
+                  icon_color: '{{ ''green'' if is_state(entity, ''closed'') else ''red'' }}'
+                  content: >-
+                    Frunk {{ 'chiuso' if is_state(entity, 'closed') else
+                    'aperto' }}
+          bagagliaio:
+            card:
+              type: custom:mushroom-chips-card
+              alignment: center
+              chips:
+                - type: template
+                  entity: cover.kitt_trunk
+                  tap_action:
+                    action: more-info
+                  icon: mdi:car-back
+                  icon_color: '{{ ''green'' if is_state(entity, ''closed'') else ''red'' }}'
+                  content: >-
+                    Bagagliaio {{ 'chiuso' if is_state(entity, 'closed') else
+                    'aperto' }}
+          temp_abitacolo:
+            card:
+              type: custom:mushroom-template-card
+              entity: sensor.kitt_inside_temperature
+              primary: '{{ states(entity) | float(0) | round(1) }} °C'
+              secondary: Abitacolo
+              icon: mdi:car-seat-heater
+              icon_color: orange
+              layout: vertical
+          gomma_as:
+            card:
+              type: custom:mushroom-template-card
+              entity: sensor.kitt_pressione_pneumatico_anteriore_sinistro
+              primary: '{{ (states(entity) | float(0) * 0.0689476) | round(2) }} bar'
+              secondary: '{{ states(entity) | float(0) | round(0) }} psi'
+              icon: mdi:tire
+              icon_color: >-
+                {{ 'red' if
+                is_state('binary_sensor.kitt_avviso_pressione_pneumatico_anteriore_sinistro',
+                'on') else 'green' }}
+              layout: vertical
+          gomma_ad:
+            card:
+              type: custom:mushroom-template-card
+              entity: sensor.kitt_pressione_pneumatico_anteriore_destro
+              primary: '{{ (states(entity) | float(0) * 0.0689476) | round(2) }} bar'
+              secondary: '{{ states(entity) | float(0) | round(0) }} psi'
+              icon: mdi:tire
+              icon_color: >-
+                {{ 'red' if
+                is_state('binary_sensor.kitt_avviso_pressione_pneumatico_anteriore_destro',
+                'on') else 'green' }}
+              layout: vertical
+          gomma_ps:
+            card:
+              type: custom:mushroom-template-card
+              entity: sensor.kitt_pressione_pneumatico_posteriore_sinistro
+              primary: '{{ (states(entity) | float(0) * 0.0689476) | round(2) }} bar'
+              secondary: '{{ states(entity) | float(0) | round(0) }} psi'
+              icon: mdi:tire
+              icon_color: >-
+                {{ 'red' if
+                is_state('binary_sensor.kitt_avviso_pressione_pneumatico_posteriore_sinistro',
+                'on') else 'green' }}
+              layout: vertical
+          gomma_pd:
+            card:
+              type: custom:mushroom-template-card
+              entity: sensor.kitt_pressione_pneumatico_posteriore_destro
+              primary: '{{ (states(entity) | float(0) * 0.0689476) | round(2) }} bar'
+              secondary: '{{ states(entity) | float(0) | round(0) }} psi'
+              icon: mdi:tire
+              icon_color: >-
+                {{ 'red' if
+                is_state('binary_sensor.kitt_avviso_pressione_pneumatico_posteriore_destro',
+                'on') else 'green' }}
+              layout: vertical
+          porte_as:
+            card:
+              type: custom:mushroom-chips-card
+              alignment: end
+              chips:
+                - type: template
+                  entity: binary_sensor.kitt_front_driver_door
+                  icon: >-
+                    {{ 'mdi:car-door' if is_state(entity, 'on') else
+                    'mdi:door-closed' }}
+                  icon_color: '{{ ''red'' if is_state(entity, ''on'') else ''green'' }}'
+                  content: '{{ ''Aperta'' if is_state(entity, ''on'') else ''Chiusa'' }}'
+                - type: template
+                  entity: binary_sensor.kitt_front_driver_window
+                  icon: >-
+                    {{ 'mdi:window-open' if is_state(entity, 'on') else
+                    'mdi:window-closed' }}
+                  icon_color: '{{ ''red'' if is_state(entity, ''on'') else ''green'' }}'
+                  content: '{{ ''Aperto'' if is_state(entity, ''on'') else ''Chiuso'' }}'
+          porte_ps:
+            card:
+              type: custom:mushroom-chips-card
+              alignment: end
+              chips:
+                - type: template
+                  entity: binary_sensor.kitt_rear_driver_door
+                  icon: >-
+                    {{ 'mdi:car-door' if is_state(entity, 'on') else
+                    'mdi:door-closed' }}
+                  icon_color: '{{ ''red'' if is_state(entity, ''on'') else ''green'' }}'
+                  content: '{{ ''Aperta'' if is_state(entity, ''on'') else ''Chiusa'' }}'
+                - type: template
+                  entity: binary_sensor.kitt_rear_driver_window
+                  icon: >-
+                    {{ 'mdi:window-open' if is_state(entity, 'on') else
+                    'mdi:window-closed' }}
+                  icon_color: '{{ ''red'' if is_state(entity, ''on'') else ''green'' }}'
+                  content: '{{ ''Aperto'' if is_state(entity, ''on'') else ''Chiuso'' }}'
+          porte_ad:
+            card:
+              type: custom:mushroom-chips-card
+              alignment: start
+              chips:
+                - type: template
+                  entity: binary_sensor.kitt_front_passenger_door
+                  icon: >-
+                    {{ 'mdi:car-door' if is_state(entity, 'on') else
+                    'mdi:door-closed' }}
+                  icon_color: '{{ ''red'' if is_state(entity, ''on'') else ''green'' }}'
+                  content: '{{ ''Aperta'' if is_state(entity, ''on'') else ''Chiusa'' }}'
+                - type: template
+                  entity: binary_sensor.kitt_front_passenger_window
+                  icon: >-
+                    {{ 'mdi:window-open' if is_state(entity, 'on') else
+                    'mdi:window-closed' }}
+                  icon_color: '{{ ''red'' if is_state(entity, ''on'') else ''green'' }}'
+                  content: '{{ ''Aperto'' if is_state(entity, ''on'') else ''Chiuso'' }}'
+          porte_pd:
+            card:
+              type: custom:mushroom-chips-card
+              alignment: start
+              chips:
+                - type: template
+                  entity: binary_sensor.kitt_rear_passenger_door
+                  icon: >-
+                    {{ 'mdi:car-door' if is_state(entity, 'on') else
+                    'mdi:door-closed' }}
+                  icon_color: '{{ ''red'' if is_state(entity, ''on'') else ''green'' }}'
+                  content: '{{ ''Aperta'' if is_state(entity, ''on'') else ''Chiusa'' }}'
+                - type: template
+                  entity: binary_sensor.kitt_rear_passenger_window
+                  icon: >-
+                    {{ 'mdi:window-open' if is_state(entity, 'on') else
+                    'mdi:window-closed' }}
+                  icon_color: '{{ ''red'' if is_state(entity, ''on'') else ''green'' }}'
+                  content: '{{ ''Aperto'' if is_state(entity, ''on'') else ''Chiuso'' }}'
+        styles:
+          card:
+            - height: 470px
+            - padding: 0
+            - overflow: hidden
+          custom_fields:
+            pic:
+              - position: absolute
+              - top: 20px
+              - left: 50%
+              - transform: translateX(-50%)
+            serratura:
+              - position: absolute
+              - top: 10px
+              - left: 10px
+            temp_esterna:
+              - position: absolute
+              - top: 10px
+              - right: 10px
+            frunk:
+              - position: absolute
+              - top: 52px
+              - left: 50%
+              - transform: translateX(-50%)
+              - white-space: nowrap
+            temp_abitacolo:
+              - position: absolute
+              - top: 215px
+              - left: 50%
+              - transform: translateX(-50%)
+              - width: 100px
+            bagagliaio:
+              - position: absolute
+              - top: 412px
+              - left: 50%
+              - transform: translateX(-50%)
+              - white-space: nowrap
+            gomma_as:
+              - position: absolute
+              - top: 70px
+              - right: calc(50% + 100px)
+              - width: 84px
+            gomma_ad:
+              - position: absolute
+              - top: 70px
+              - left: calc(50% + 100px)
+              - width: 84px
+            porte_as:
+              - position: absolute
+              - top: 175px
+              - right: calc(50% + 100px)
+              - width: 90px
+            porte_ad:
+              - position: absolute
+              - top: 175px
+              - left: calc(50% + 100px)
+              - width: 90px
+            porte_ps:
+              - position: absolute
+              - top: 262px
+              - right: calc(50% + 100px)
+              - width: 90px
+            porte_pd:
+              - position: absolute
+              - top: 262px
+              - left: calc(50% + 100px)
+              - width: 90px
+            gomma_ps:
+              - position: absolute
+              - top: 345px
+              - right: calc(50% + 100px)
+              - width: 84px
+            gomma_pd:
+              - position: absolute
+              - top: 345px
+              - left: calc(50% + 100px)
+              - width: 84px
+      - type: tile
+        entity: lock.kitt_serratura
+        name: Serratura
+        features_position: bottom
+        features:
+          - type: lock-commands
+      - type: tile
+        entity: cover.kitt_finestrini
+        name: Finestrini
+        features_position: bottom
+        features:
+          - type: cover-open-close
+      - type: tile
+        entity: update.kitt_aggiornamento
+        name: Software
+      - type: tile
+        entity: media_player.kitt_lettore_multimediale
+        name: Multimedia
+      - type: heading
+        heading: Clima
+      - type: tile
+        entity: climate.kitt_climatizzatore
+        name: Climatizzatore
+        grid_options:
+          columns: full
+        features_position: bottom
+        features:
+          - type: climate-hvac-modes
+            hvac_modes:
+              - 'off'
+              - heat_cool
+          - type: target-temperature
+      - type: tile
+        entity: switch.kitt_sbrinamento
+        name: Sbrinamento
+      - type: tile
+        entity: switch.kitt_riscaldamento_automatico_del_volante
+        name: Volante auto
+      - type: tile
+        entity: select.kitt_riscaldamento_del_volante
+        name: Volante riscaldato
+        grid_options:
+          columns: full
+        features_position: inline
+        features:
+          - type: select-options
+      - type: tile
+        entity: select.kitt_riscaldamento_sedile_anteriore_sinistro
+        name: Sedile guida
+        features_position: bottom
+        features:
+          - type: select-options
+      - type: tile
+        entity: select.kitt_riscaldamento_sedile_anteriore_destro
+        name: Sedile passeggero
+        features_position: bottom
+        features:
+          - type: select-options
+      - type: tile
+        entity: switch.kitt_climatizzazione_automatica_del_sedile_sinistro
+        name: Sedile guida auto
+      - type: tile
+        entity: switch.kitt_climatizzazione_automatica_del_sedile_destro
+        name: Sedile pass. auto
+  - type: grid
+    cards:
+      - type: heading
+        heading: Posizione
+      - type: map
+        entities:
+          - entity: device_tracker.kitt_posizione
+            name: Kitt
+        theme_mode: auto
+        grid_options:
+          columns: full
+          rows: 5
+      - type: tile
+        entity: device_tracker.kitt_posizione
+        name: Posizione
+      - type: tile
+        entity: sensor.kitt_odometer
+        name: Contachilometri
+      - type: tile
+        entity: binary_sensor.kitt_user_present
+        name: Utente a bordo
+      - type: tile
+        entity: switch.kitt_modalita_sentinella
+        name: Sentinella
+      - type: tile
+        entity: device_tracker.kitt_percorso
+        name: Destinazione
+        grid_options:
+          columns: full
+        visibility:
+          - condition: state
+            entity: device_tracker.kitt_percorso
+            state_not: unknown
+      - type: tile
+        entity: sensor.kitt_time_to_arrival
+        name: Arrivo previsto
+        visibility:
+          - condition: state
+            entity: sensor.kitt_time_to_arrival
+            state_not: unavailable
+          - condition: state
+            entity: sensor.kitt_time_to_arrival
+            state_not: unknown
+      - type: tile
+        entity: sensor.kitt_distance_to_arrival
+        name: Distanza
+        visibility:
+          - condition: state
+            entity: sensor.kitt_distance_to_arrival
+            state_not: unavailable
+          - condition: state
+            entity: sensor.kitt_distance_to_arrival
+            state_not: unknown
+      - type: statistics-graph
+        title: Autonomia (7 giorni)
+        chart_type: line
+        period: hour
+        days_to_show: 7
+        entities:
+          - sensor.kitt_battery_range
+        stat_types:
+          - mean
+        hide_legend: true
+        grid_options:
+          columns: full
+      - type: heading
+        heading: Comandi
+      - type: tile
+        entity: button.kitt_wake
+        name: Sveglia
+        icon: mdi:sleep-off
+        hide_state: true
+        tap_action:
+          action: perform-action
+          perform_action: button.press
+          target:
+            entity_id: button.kitt_wake
+      - type: tile
+        entity: button.kitt_flash_lights
+        name: Lampeggia
+        hide_state: true
+        tap_action:
+          action: perform-action
+          perform_action: button.press
+          target:
+            entity_id: button.kitt_flash_lights
+      - type: tile
+        entity: button.kitt_honk_horn
+        name: Clacson
+        hide_state: true
+        tap_action:
+          action: perform-action
+          perform_action: button.press
+          target:
+            entity_id: button.kitt_honk_horn
+      - type: tile
+        entity: button.kitt_homelink
+        name: HomeLink
+        hide_state: true
+        tap_action:
+          action: perform-action
+          perform_action: button.press
+          target:
+            entity_id: button.kitt_homelink
+      - type: tile
+        entity: button.kitt_keyless_driving
+        name: Guida senza chiave
+        hide_state: true
+        tap_action:
+          action: perform-action
+          perform_action: button.press
+          target:
+            entity_id: button.kitt_keyless_driving
+      - type: tile
+        entity: button.kitt_riproduci_scoreggia
+        name: Scoreggia 💨
+        hide_state: true
+        tap_action:
+          action: perform-action
+          perform_action: button.press
+          target:
+            entity_id: button.kitt_riproduci_scoreggia
+  - type: grid
+    cards:
+      - type: heading
+        heading: Batteria e ricarica
+      - type: gauge
+        entity: sensor.kitt_battery_level
+        name: Batteria
+        needle: true
+        min: 0
+        max: 100
+        severity:
+          red: 0
+          yellow: 20
+          green: 50
+        grid_options:
+          columns: 6
+          rows: 2
+      - type: tile
+        entity: sensor.kitt_battery_range
+        name: Autonomia
+      - type: tile
+        entity: sensor.kitt_charging
+        name: Ricarica
+      - type: tile
+        entity: binary_sensor.kitt_charge_cable
+        name: Cavo
+      - type: tile
+        entity: switch.kitt_charge
+        name: Avvia ricarica
+      - type: tile
+        entity: cover.kitt_charge_port_door
+        name: Sportello
+      - type: tile
+        entity: lock.kitt_blocco_del_cavo_di_ricarica
+        name: Blocco cavo
+      - type: entities
+        grid_options:
+          columns: full
+        entities:
+          - entity: number.kitt_charge_limit
+            name: Limite di carica
+          - entity: number.kitt_charge_current
+            name: Corrente massima
+          - entity: sensor.kitt_charger_power
+            name: Potenza
+          - entity: sensor.kitt_charger_voltage
+            name: Tensione
+          - entity: sensor.kitt_charger_current
+            name: Corrente
+          - entity: sensor.kitt_charge_rate
+            name: Velocità
+          - entity: sensor.kitt_time_to_full_charge
+            name: Tempo alla carica completa
+          - entity: sensor.kitt_charge_energy_added
+            name: Energia aggiunta
+cards: []

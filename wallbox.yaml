@@ -1,0 +1,310 @@
+title: Wallbox
+path: wallbox
+icon: mdi:ev-station
+theme: Backend-selected
+badges: []
+cards:
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: sensor.ev_charger_stato
+        name: Avvia Ricarica
+        icon: mdi:play-circle-outline
+        icon_height: 70px
+        state:
+          - value: charging
+            styles:
+              card:
+                - opacity: '0.35'
+                - pointer-events: none
+          - value: charged
+            styles:
+              card:
+                - opacity: '0.35'
+                - pointer-events: none
+          - value: idle
+            styles:
+              card:
+                - background-color: rgba(50,180,50,0.25)
+                - border: 2px solid rgba(50,180,50,0.6)
+          - value: plugged_in
+            color: rgb(80,200,80)
+            styles:
+              card:
+                - background-color: rgba(50,180,50,0.35)
+                - border: 2px solid rgba(50,180,50,0.8)
+        styles:
+          card:
+            - height: 130px
+            - font-size: 18px
+            - font-weight: bold
+          icon:
+            - width: 65px
+            - height: 65px
+            - color: rgb(80,200,80)
+          name:
+            - font-size: 18px
+            - font-weight: bold
+            - margin-top: 6px
+            - color: rgb(80,200,80)
+        tap_action:
+          action: call-service
+          service: button.press
+          service_data:
+            entity_id: button.ev_charger_charge
+      - type: custom:button-card
+        entity: sensor.ev_charger_stato
+        name: Stop Ricarica
+        icon: mdi:stop-circle-outline
+        icon_height: 70px
+        state:
+          - value: idle
+            styles:
+              card:
+                - opacity: '0.35'
+                - pointer-events: none
+          - value: plugged_in
+            styles:
+              card:
+                - opacity: '0.35'
+                - pointer-events: none
+          - value: charged
+            styles:
+              card:
+                - opacity: '0.35'
+                - pointer-events: none
+          - value: charging
+            color: rgb(220,80,80)
+            styles:
+              card:
+                - background-color: rgba(220,50,50,0.25)
+                - border: 2px solid rgba(220,50,50,0.6)
+          - value: paused
+            color: rgb(220,80,80)
+            styles:
+              card:
+                - background-color: rgba(220,50,50,0.25)
+                - border: 2px solid rgba(220,50,50,0.6)
+        styles:
+          card:
+            - height: 130px
+            - font-size: 18px
+            - font-weight: bold
+          icon:
+            - width: 65px
+            - height: 65px
+            - color: rgb(220,80,80)
+          name:
+            - font-size: 18px
+            - font-weight: bold
+            - margin-top: 6px
+            - color: rgb(220,80,80)
+        tap_action:
+          action: call-service
+          service: button.press
+          service_data:
+            entity_id: button.ev_charger_stop
+  - type: custom:bar-card
+    entities:
+      - entity: number.ev_charger_charge_current
+        name: Corrente impostata (tocca per cambiare)
+    max: 32
+    height: 55px
+    positions:
+      icon: 'off'
+      indicator: inside
+      title: inside
+    severity:
+      - color: '#1a7e1a'
+        from: 0
+        to: 13
+      - color: '#ffa600'
+        from: 13
+        to: 20
+      - color: '#db4437'
+        from: 20
+        to: 32
+    card_mod:
+      style: >
+        ha-card div.card-content { padding: 0 !important; }
+
+        ha-card bar-card-name { color: white; font-weight: bold; text-shadow:
+        -1px 1px 0 #000, 1px 1px 0 #000; }
+
+        ha-card bar-card-value { color: white; font-weight: bold; text-shadow:
+        -1px 1px 0 #000, 1px 1px 0 #000; }
+    tap_action:
+      action: more-info
+      entity: number.ev_charger_charge_current
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-template-card
+        primary: '{{ state_attr(''sensor.ev_charger_stato'', ''metrics'').p }} W'
+        secondary: Potenza erogata
+        icon: mdi:lightning-bolt
+        icon_color: >-
+          {% set p = state_attr('sensor.ev_charger_stato', 'metrics').p | int(0)
+          %}{% if p > 5000 %}red{% elif p > 2000 %}orange{% elif p > 0 %}green{%
+          else %}grey{% endif %}
+        layout: vertical
+        tap_action:
+          action: none
+      - type: custom:mushroom-template-card
+        primary: >-
+          {{ ((state_attr('sensor.ev_charger_stato', 'metrics').L1[1] +
+          state_attr('sensor.ev_charger_stato', 'metrics').L2[1] +
+          state_attr('sensor.ev_charger_stato', 'metrics').L3[1]) / 1000) |
+          round(1) }} A
+        secondary: Corrente totale
+        icon: mdi:current-ac
+        icon_color: >-
+          {% set c = (state_attr('sensor.ev_charger_stato', 'metrics').L1[1] +
+          state_attr('sensor.ev_charger_stato', 'metrics').L2[1] +
+          state_attr('sensor.ev_charger_stato', 'metrics').L3[1]) / 1000 %}{% if
+          c > 25 %}red{% elif c > 15 %}orange{% elif c > 0 %}blue{% else
+          %}grey{% endif %}
+        layout: vertical
+        tap_action:
+          action: none
+      - type: gauge
+        entity: sensor.kitt_battery_level
+        min: 0
+        max: 100
+        needle: true
+        severity:
+          green: 20
+          yellow: 10
+          red: 0
+        name: 🔋 Batteria Kitt
+  - type: markdown
+    content: >-
+      {% set s = states('sensor.ev_charger_stato') %}
+
+      {% set icons =
+      {'idle':'🟡','charging':'🟢','plugged_in':'🔵','charged':'✅','fault':'🔴','sleep':'⚫','waiting':'🟠','paused':'🟠'}
+      %}
+
+      {% set m = state_attr('sensor.ev_charger_stato', 'metrics') %}
+
+      {% set h = state_attr('sensor.ev_charger_stato', 'history') | from_json %}
+
+      {% set ci = states('text.ev_charger_charger_info') | from_json %}
+
+      ### {{ icons.get(s,'⚪') }} Wallbox — **{{ s | title }}**
+
+      | | Valore |
+
+      |---|---|
+
+      | 🚗 Stato ricarica Kitt | {{ states('sensor.kitt_charging') | title }} —
+      {{ states('sensor.kitt_charger_power') }} kW |
+
+      | ⚡ kWh aggiunti all'auto (sessione) | {{
+      states('sensor.kitt_charge_energy_added') }} kWh |
+
+      | 🔋 Batteria Kitt | {{ states('sensor.kitt_battery_level') }}% |
+
+      | ⏱️ Fine ricarica prevista | {% if
+      states('sensor.kitt_time_to_full_charge') not in ['unavailable','unknown']
+      %}{{ as_timestamp(states('sensor.kitt_time_to_full_charge')) |
+      timestamp_custom('%H:%M') }}{% else %}—{% endif %} |
+
+      | 📦 Energia sessione wallbox | {{ (m.e | float / 10) | round(2) }} kWh |
+
+      | 📊 Totale erogato dalla wallbox | {{ (ci.e | float / 10) | round(1) }}
+      kWh |
+
+      | 🌡️ Temperatura wallbox | {{ (m.t | float / 10) | round(1) }}°C |
+
+
+      📋 **Ultima sessione:** {{ h.t }} — {{ h.s }}→{{ h.e }} — {{
+      (h.d|float/3600)|round(1) }}h — {{ (h.c|float/10)|round(1) }} kWh
+  - type: markdown
+    content: >-
+      {% set m = state_attr('sensor.ev_charger_stato', 'metrics') %}
+
+      ### 📡 Tensioni di rete
+
+      | | L1 | L2 | L3 |
+
+      |---|---|---|---|
+
+      | ⚡ Tensione | {{ (m.L1[0]/10)|round(1) }}V | {{ (m.L2[0]/10)|round(1) }}V
+      | {{ (m.L3[0]/10)|round(1) }}V |
+
+      | 〰️ Corrente | {{ (m.L1[1]/1000)|round(2) }}A | {{
+      (m.L2[1]/1000)|round(2) }}A | {{ (m.L3[1]/1000)|round(2) }}A |
+
+      | 💡 Potenza | {{ m.L1[2] }}W | {{ m.L2[2] }}W | {{ m.L3[2] }}W |
+  - type: entities
+    title: ⚙️ Impostazioni
+    entities:
+      - entity: select.ev_charger_plug_in_action
+        name: Azione all'inserimento
+      - entity: switch.ev_charger_nfc
+        name: Autenticazione NFC
+      - entity: switch.ev_charger_unearthed
+        name: Modalità senza terra ⚠️
+  - type: custom:mushroom-template-card
+    primary: >-
+      {% set cm = states('text.ev_charger_charge_mode') | from_json %}{% if cm.m
+      == 0 %}⚡ Immediata{% elif cm.m == 1 %}🕐 Programmata{% elif cm.m == 2 %}⏱️
+      Timer{% else %}Modalità {{ cm.m }}{% endif %}
+    secondary: >-
+      {% set cm = states('text.ev_charger_charge_mode') | from_json %}{% if cm.m
+      == 0 %}La ricarica parte subito all'inserimento del cavo{% elif cm.m == 1
+      %}Ricarica programmata: {{ cm.ss }} → {{ cm.se }}{% elif cm.m == 2 %}Timer
+      attivo{% else %}Modalità sconosciuta — JSON: {{
+      states('text.ev_charger_charge_mode') }}{% endif %}
+    icon: mdi:timer-outline
+    icon_color: >-
+      {% set cm = states('text.ev_charger_charge_mode') | from_json %}{% if cm.m
+      == 0 %}green{% elif cm.m == 1 %}blue{% else %}orange{% endif %}
+    badge_icon: mdi:pencil
+    badge_color: grey
+    tap_action:
+      action: more-info
+      entity: text.ev_charger_charge_mode
+  - type: custom:mushroom-template-card
+    primary: >-
+      {% set s = states('number.ev_charger_operating_state') | int(0) %}{% if s
+      == 0 %}Idle{% elif s == 1 %}In preparazione{% elif s == 2 %}Disponibile{%
+      elif s == 3 %}In carica{% elif s == 4 %}In carica (sospeso){% elif s == 5
+      %}Sospeso dall'auto{% elif s == 6 %}Sospeso dalla wallbox{% elif s == 7
+      %}Fine ricarica{% elif s == 8 %}Riservato{% elif s == 9 %}Non
+      disponibile{% elif s == 99 %}⚠️ Errore{% elif s == 100 %}Standby{% elif s
+      == 101 %}Operativo — nessun veicolo{% elif s == 102 %}Veicolo collegato{%
+      elif s == 103 %}Ricarica in corso{% elif s == 104 %}Ricarica completata{%
+      else %}Stato {{ s }}{% endif %}
+    secondary: >-
+      Stato operativo wallbox (codice: {{
+      states('number.ev_charger_operating_state') | int }})
+    icon: mdi:state-machine
+    icon_color: >-
+      {% set s = states('number.ev_charger_operating_state') | int(0) %}{% if s
+      == 99 %}red{% elif s in [3, 103] %}green{% elif s in [5,6,4] %}orange{%
+      else %}blue{% endif %}
+    tap_action:
+      action: none
+  - type: markdown
+    content: >-
+      {% set ci = states('text.ev_charger_charger_info') | from_json %}
+
+      ### ℹ️ Info wallbox
+
+      **Firmware:** {{ ci.fv }} &nbsp;&nbsp; **Cavo max:** {{ ci.cp }} kW
+      &nbsp;&nbsp; **RCD:** {{ ci.r }}
+  - type: horizontal-stack
+    cards:
+      - type: button
+        entity: button.ev_charger_refresh
+        icon: mdi:refresh
+        name: Aggiorna
+      - type: button
+        entity: button.ev_charger_reset
+        icon: mdi:restart
+        name: Reset
+      - type: button
+        entity: button.ev_charger_riavvia
+        icon: mdi:power-cycle
+        name: Riavvia

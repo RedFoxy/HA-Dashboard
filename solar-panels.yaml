@@ -1,0 +1,212 @@
+title: Pannelli Solari
+path: pannelli-solari
+icon: mdi:solar-panel-large
+type: sections
+max_columns: 2
+sections:
+  - type: grid
+    column_span: 2
+    cards:
+      - type: heading
+        heading: ⚡ Flusso energetico in tempo reale
+        badges:
+          - type: entity
+            entity: sensor.growatt_system_status
+          - type: entity
+            entity: sensor.growatt_last_update
+            state_content: last_changed
+      - type: custom:mushroom-template-card
+        primary: >-
+          {{ states('sensor.growatt_pv_power') | float(0) | round(0) }} W
+          prodotti
+        secondary: >-
+          {% set pv = states('sensor.growatt_pv_power') | float(0) %} {% set bc
+          = states('sensor.growatt_battery_charge_power') | float(0) %} {% set
+          ge = states('sensor.growatt_grid_export_power') | float(0) %} {% set
+          pv2h = [pv - bc - ge, 0] | max %} → 🔋 {{ bc | round(0) }} W  |  → 🏠
+          {{ pv2h | round(0) }} W  |  → ⚡ {{ ge | round(0) }} W
+        icon: mdi:solar-panel-large
+        icon_color: >-
+          {{ 'amber' if states('sensor.growatt_pv_power') | float(0) > 10 else
+          'disabled' }}
+        layout: vertical
+        fill_container: true
+        multiline_secondary: true
+        card_mod:
+          style: 'ha-card { border-left: 4px solid var(--warning-color, #f59e0b); }'
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            entity: sensor.growatt_battery_soc
+            primary: '{{ states(''sensor.growatt_battery_soc'') }}%'
+            secondary: >-
+              {% set bc = states('sensor.growatt_battery_charge_power') |
+              float(0) %} {% set bd =
+              states('sensor.growatt_battery_discharge_power') | float(0) %} {%
+              if bc > 0 %}⬆ +{{ bc | round(0) }} W{% elif bd > 0 %}⬇ {{ bd |
+              round(0) }} W → 🏠{% else %}Standby{% endif %}
+            icon: >-
+              {% set bc = states('sensor.growatt_battery_charge_power') |
+              float(0) %} {% set bd =
+              states('sensor.growatt_battery_discharge_power') | float(0) %} {%
+              set soc = states('sensor.growatt_battery_soc') | int(0) %} {% if
+              bc > 0 %}mdi:battery-charging{% elif bd > 0
+              %}mdi:battery-arrow-down-outline{% elif soc > 80
+              %}mdi:battery-high{% elif soc > 40 %}mdi:battery-medium{% else
+              %}mdi:battery-low{% endif %}
+            icon_color: >-
+              {% set bc = states('sensor.growatt_battery_charge_power') |
+              float(0) %} {% set bd =
+              states('sensor.growatt_battery_discharge_power') | float(0) %} {%
+              if bc > 0 %}green{% elif bd > 0 %}orange{% else %}blue{% endif %}
+            layout: vertical
+            card_mod:
+              style: 'ha-card { border-left: 4px solid var(--info-color, #3b82f6); }'
+          - type: custom:mushroom-template-card
+            entity: sensor.growatt_load_power
+            primary: '{{ states(''sensor.growatt_load_power'') | float(0) | round(0) }} W'
+            secondary: >-
+              {% set pv = states('sensor.growatt_pv_power') | float(0) %} {% set
+              bc = states('sensor.growatt_battery_charge_power') | float(0) %}
+              {% set bd = states('sensor.growatt_battery_discharge_power') |
+              float(0) %} {% set gi = states('sensor.growatt_grid_import_power')
+              | float(0) %} {% set ge =
+              states('sensor.growatt_grid_export_power') | float(0) %} {% set
+              pv2h = [pv - bc - ge, 0] | max %} ☀️{{ pv2h | round(0) }} 🔋{{ bd
+              | round(0) }} ⚡{{ gi | round(0) }}
+            icon: mdi:home-lightning-bolt
+            icon_color: >-
+              {% set l = states('sensor.growatt_load_power') | float(0) %} {% if
+              l > 3000 %}red{% elif l > 1500 %}orange{% else %}green{% endif %}
+            layout: vertical
+            card_mod:
+              style: >-
+                ha-card { border-left: 4px solid var(--success-color, #22c55e);
+                }
+          - type: custom:mushroom-template-card
+            entity: sensor.growatt_grid_power
+            primary: >-
+              {% set gi = states('sensor.growatt_grid_import_power') | float(0)
+              %} {% set ge = states('sensor.growatt_grid_export_power') |
+              float(0) %} {{ (gi if gi > 0 else ge) | round(0) }} W
+            secondary: >-
+              {% set gi = states('sensor.growatt_grid_import_power') | float(0)
+              %} {% set ge = states('sensor.growatt_grid_export_power') |
+              float(0) %} {% if gi > 0 %}⬇ Importo dalla rete{% elif ge > 0 %}⬆
+              Cedo al GSE{% else %}Nessuno scambio{% endif %}
+            icon: >-
+              {% set gi = states('sensor.growatt_grid_import_power') | float(0)
+              %} {% set ge = states('sensor.growatt_grid_export_power') |
+              float(0) %} {% if gi > 0 %}mdi:transmission-tower-import{% elif ge
+              > 0 %}mdi:transmission-tower-export{% else
+              %}mdi:transmission-tower{% endif %}
+            icon_color: >-
+              {% set gi = states('sensor.growatt_grid_import_power') | float(0)
+              %} {% set ge = states('sensor.growatt_grid_export_power') |
+              float(0) %} {% if gi > 0 %}red{% elif ge > 0 %}green{% else
+              %}disabled{% endif %}
+            layout: vertical
+            card_mod:
+              style: 'ha-card { border-left: 4px solid var(--error-color, #ef4444); }'
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.growatt_battery_soc
+            name: 🔋 Carica batteria
+        max: 100
+        height: 42px
+        positions:
+          icon: 'off'
+          indicator: inside
+          title: inside
+        severity:
+          - color: '#ef4444'
+            from: 0
+            to: 20
+          - color: '#f97316'
+            from: 21
+            to: 50
+          - color: '#22c55e'
+            from: 51
+            to: 100
+        card_mod:
+          style: >-
+            ha-card
+            div.card-content{padding:0!important}bar-card-name,bar-card-value{color:white!important;font-weight:bold;text-shadow:0
+            1px 3px rgba(0,0,0,0.8)}
+      - type: markdown
+        content: >-
+          | ☀️ PV1 | ☀️ PV2 | 🔌 Rete | 🔋 Batteria | 🌡️ Inverter |
+
+          |:---:|:---:|:---:|:---:|:---:|
+
+          | {{ states('sensor.growatt_pv1_voltage') }} V / {{
+          states('sensor.growatt_pv1_power') | float(0) | round(0) }} W | {{
+          states('sensor.growatt_pv2_voltage') }} V / {{
+          states('sensor.growatt_pv2_power') | float(0) | round(0) }} W | {{
+          states('sensor.growatt_grid_voltage') }} V / {{
+          states('sensor.growatt_grid_frequency') }} Hz | {{
+          states('sensor.growatt_battery_voltage') }} V | {{
+          states('sensor.growatt_inverter_temperature') }} °C |
+  - type: grid
+    cards:
+      - type: heading
+        heading: 📅 Oggi
+      - type: tile
+        entity: sensor.growatt_pv_energy_today
+        name: ☀️ Solare prodotto
+      - type: tile
+        entity: sensor.growatt_load_energy_today
+        name: 🏠 Consumo casa
+      - type: tile
+        entity: sensor.growatt_grid_import_energy_today
+        name: ⚡ Importato da rete
+      - type: tile
+        entity: sensor.growatt_grid_export_energy_today
+        name: 📤 Ceduto al GSE
+      - type: tile
+        entity: sensor.growatt_battery_charge_energy_today
+        name: 🔋 Batteria caricata
+      - type: tile
+        entity: sensor.growatt_battery_discharge_energy_today
+        name: 🔋 Batteria scaricata
+  - type: grid
+    cards:
+      - type: heading
+        heading: 📊 Dall'installazione
+      - type: tile
+        entity: sensor.growatt_pv_energy_total
+        name: ☀️ Totale prodotto FV
+      - type: tile
+        entity: sensor.growatt_ac_output_energy_total
+        name: 🏭 Uscita AC inverter
+      - type: tile
+        entity: sensor.growatt_grid_export_energy_total
+        name: 📤 Ceduto GSE totale
+      - type: tile
+        entity: sensor.growatt_grid_import_energy_total
+        name: ⚡ Importato totale
+      - type: tile
+        entity: sensor.growatt_battery_charge_energy_total
+        name: 🔋 kWh totali caricati
+      - type: tile
+        entity: sensor.growatt_battery_discharge_energy_total
+        name: 🔋 kWh totali scaricati
+  - type: grid
+    column_span: 2
+    cards:
+      - type: heading
+        heading: 📈 Ultime 24 ore
+      - type: history-graph
+        hours_to_show: 24
+        grid_options:
+          columns: full
+        entities:
+          - entity: sensor.growatt_pv_power
+            name: Solare
+          - entity: sensor.growatt_load_power
+            name: Casa
+          - entity: sensor.growatt_grid_power
+            name: Rete (+ prelievo / − immissione)
+          - entity: sensor.growatt_battery_power
+            name: Batteria (+ scarica / − carica)
+cards: []

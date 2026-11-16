@@ -1,0 +1,146 @@
+icon: mdi:battery-high
+title: UPS
+path: ups
+badges: []
+cards:
+  - type: vertical-stack
+    cards:
+      - type: history-graph
+        entities:
+          - entity: sensor.apc_sua3000i_carico
+            name: Carico
+        hours_to_show: 12
+        title: APC SUA3000I - Studio
+      - type: entities
+        entities:
+          - entity: sensor.apc_sua3000i_carico
+            name: Carico
+          - entity: sensor.apc_sua3000i_carica_batterie
+            name: Carica batterie
+          - entity: sensor.apc_sua3000i_autonomia_della_batteria
+            name: Autonomia della batteria
+          - entity: sensor.apc_sua3000i_dati_di_stato
+            name: Dati di stato
+          - entity: sensor.apc_sua3000i_stato
+            name: Stato
+          - entity: sensor.apc_sua3000i_tensione_di_ingresso
+            name: Tensione di ingresso
+          - entity: sensor.apc_sua3000i_tensione_di_uscita
+            name: Tensione di uscita
+          - entity: sensor.apc_sua3000i_temperatura_dell_ups
+            name: Temperatura dell'ups
+        show_header_toggle: false
+        state_color: true
+  - type: vertical-stack
+    cards:
+      - type: history-graph
+        entities:
+          - entity: sensor.apc_su2200inet_carico
+            name: Carico
+        hours_to_show: 12
+        title: APC SU2200INET - Soggiorno
+      - type: entities
+        entities:
+          - entity: sensor.apc_su2200inet_carico
+            name: Carico
+          - entity: sensor.apc_su2200inet_carica_batterie
+            name: Carica batterie
+          - entity: sensor.apc_su2200inet_autonomia_della_batteria
+            name: Autonomia della batteria
+          - entity: sensor.apc_su2200inet_dati_di_stato
+            name: Dati di stato
+          - entity: sensor.apc_su2200inet_stato
+            name: Stato
+          - entity: sensor.apc_su2200inet_tensione_di_ingresso
+            name: Tensione di ingresso
+          - entity: sensor.apc_su2200inet_tensione_di_uscita
+            name: Tensione di uscita
+          - entity: sensor.apc_su2200inet_temperatura_dell_ups
+            name: Temperatura dell'ups
+        show_header_toggle: false
+        state_color: true
+  - type: custom:vertical-stack-in-card
+    title: Stato batterie
+    cards:
+      - card:
+          positions:
+            icon: 'off'
+            indicator: inside
+            title: inside
+          severity:
+            - color: Red
+              from: 0
+              to: 25
+            - color: Orange
+              from: 26
+              to: 50
+            - color: '#1a7e1a'
+              from: 51
+              to: 100
+          type: custom:bar-card
+          style: |-
+            bar-card-name {
+              color: black;
+            }
+          unit_of_measurement: '%'
+        filter:
+          include:
+            - options: {}
+              entity_id: sensor.bat_*
+            - options: {}
+              entity_id: sensor.battery_*
+            - options: {}
+              entity_id: sensor.*_battery_level
+            - options: {}
+              entity_id: sensor.*_battery
+            - options: {}
+              entity_id: sensor.batteria_*
+            - options: {}
+              entity_id: sensor.*_batteria
+            - options: {}
+              entity_id: sensor.pulsante*_batteria
+            - options: {}
+              entity_id: sensor.apc*_batterie
+            - options: {}
+              entity_id: sensor.nmc884101a_statement_of_charge
+          exclude:
+            - options: {}
+              entity_id: '*_della_batteria*'
+            - options: {}
+              entity_id: '*iphone*'
+            - options: {}
+              entity_id: '*ipad*'
+            - options: {}
+              entity_id: '*v20*'
+            - options: {}
+              entity_id: '*self_consu*'
+            - options: {}
+              entity_id: '*consumo*'
+            - options: {}
+              entity_id: '*daniela*'
+            - options: {}
+              entity_id: '*autonomia*'
+            - options: {}
+              entity_id: sensor.battery_monitor_*
+            - options: {}
+              entity_id: sensor.citofono_batteria
+        sort:
+          ignore_case: true
+          method: state
+          numeric: true
+        type: custom:auto-entities
+      - entities:
+          - entity: input_number.soglia_minima_batterie
+        type: entities
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: Battery Status
+        entities:
+          - entity: sensor.battery_monitor_status
+          - entity: sensor.battery_monitor_total
+          - entity: sensor.battery_monitor_low
+          - entity: sensor.battery_monitor_low_devices
+          - entity: sensor.battery_monitor_lowest
+          - entity: sensor.battery_monitor_low_list
+          - entity: sensor.battery_monitor_overview
